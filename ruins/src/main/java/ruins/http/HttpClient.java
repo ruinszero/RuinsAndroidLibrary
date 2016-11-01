@@ -13,21 +13,33 @@ public class HttpClient {
     private static HttpClient httpClient;
     private Retrofit retrofit;
 
-    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-    OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-    public static HttpClient getInstance(String baseUrl){
+    /**
+     * 获取HttpClient
+     * @param baseUrl  URL
+     * @param log      是否打印日志
+     */
+    public static HttpClient getInstance(String baseUrl,boolean log){
         if (httpClient==null){
             synchronized (HttpClient.class){
-                if (httpClient==null)
-                    httpClient=new HttpClient(baseUrl);
+                if (httpClient==null){
+                    httpClient=new HttpClient(baseUrl,log);
+                }
             }
         }
         return httpClient;
     }
 
-    public HttpClient(String baseUrl){
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    private HttpClient(String baseUrl,boolean log){
+        OkHttpClient.Builder builder=new OkHttpClient.Builder();
+        if (log){
+            //Log信息拦截器
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            //设置Log
+            builder.addInterceptor(interceptor);
+        }
+
+        OkHttpClient client = builder.build();
         retrofit=new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)

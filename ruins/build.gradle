@@ -16,6 +16,7 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
         }
+
     }
 
     dependencies {
@@ -41,4 +42,6 @@ android {
         compile 'com.squareup.picasso:picasso:2.5.2'
         compile 'com.nineoldandroids:library:2.4.0'
     }
+
+
 }
