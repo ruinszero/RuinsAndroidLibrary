@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">RuinsAndroidLibrary</string>
+    <string name="NavigationView">NavigationView 的使用</string>
+    <string name="title_activity_navigation_view">NavigationViewActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
