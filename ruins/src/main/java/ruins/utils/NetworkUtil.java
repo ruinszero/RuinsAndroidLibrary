@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
  * 用了过时的api
  * Created by ruinszero on 16/6/28.
  */
+@SuppressWarnings("unused")
 public class NetworkUtil {
     //没有网络连接
     public static final int NETWORN_NONE = 0;
@@ -21,6 +22,10 @@ public class NetworkUtil {
     public static final int NETWORN_3G = 3;
     public static final int NETWORN_4G = 4;
     public static final int NETWORN_MOBILE = 5;
+
+    private NetworkUtil() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * 获取当前网络连接类型

@@ -5,12 +5,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "0.0.2"
         buildTypes {
@@ -29,9 +29,9 @@ android {
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         testCompile 'junit:junit:4.12'
-        compile 'com.android.support:appcompat-v7:24.2.0'
-        compile 'com.android.support:support-v4:24.2.0'
-        compile 'com.android.support:design:24.2.1'
+        compile 'com.android.support:appcompat-v7:25.0.0'
+        compile 'com.android.support:support-v4:25.0.0'
+        compile 'com.android.support:design:25.0.0'
         //网络与Rxjava相关
         compile 'com.squareup.okhttp3:okhttp:3.2.0'
         compile 'com.squareup.retrofit2:retrofit:2.0.1'
@@ -41,7 +41,7 @@ android {
         compile 'io.reactivex:rxjava:1.1.0'
         compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
         //json解析
-        compile 'com.google.code.gson:gson:2.6.2'
+        compile 'com.google.code.gson:gson:2.7'
         compile 'com.squareup.retrofit2:converter-gson:2.0.1'
         //图片库
         compile 'com.squareup.picasso:picasso:2.5.2'
@@ -55,4 +55,5 @@ android {
 
 dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'org.jetbrains:annotations:15.0'
 }
