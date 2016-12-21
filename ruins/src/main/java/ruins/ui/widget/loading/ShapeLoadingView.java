@@ -16,9 +16,7 @@ import com.nineoldandroids.animation.ArgbEvaluator;
 import zero.ruins.R;
 
 
-/**
- * Created by zzz40500 on 15/4/4.
- */
+
 public class ShapeLoadingView extends View {
 
 

@@ -1,5 +1,5 @@
 # RuinsAndroidLibrary
-一个Android框架封装库，最终目的是成为一个模块化、插件式的框架。
+一个自用Android框架，封装常用库，方便开发。
 ## Gradle
 Add it in your root build.gradle at the end of repositories:
 ```

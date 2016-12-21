@@ -7,13 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import ruins.ui.widget.loading.LoadingView;
 import zero.ruins.R;
-
+ @SuppressWarnings("unused")
 public abstract class AbstractBaseActivity extends AppCompatActivity {
     LoadingView mLoadingView;
     ViewGroup mViewGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +28,10 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * <pre>
      * 初始化View
      * @param savedInstanceState
+     * </pre>
      */
     protected abstract void initView(Bundle savedInstanceState);
 
@@ -53,6 +58,11 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         }
     }
 
+     /**
+      * <pre>是否开启Eventbus</pre>
+      */
+     protected abstract boolean useEventBus();
+
     /**
      * 关闭加载动画
      */
@@ -61,4 +71,20 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
            mViewGroup.removeView(mLoadingView);
         }
     }
-}
+
+     @Override
+     protected void onStart() {
+         super.onStart();
+         if (useEventBus()) {
+             EventBus.getDefault().register(this);
+         }
+     }
+
+     @Override
+     protected void onStop() {
+         super.onStop();
+         if (useEventBus()) {
+             EventBus.getDefault().unregister(this);
+         }
+     }
+ }
