@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 粉红色 -->
+    <!-- 粉红，即浅红色。别称：妃色、杨妃色、湘妃色、妃红色。 -->
+    <color name="pink">#FFB3A7</color>
+    <!-- 妃色 -->
+    <!-- 妃红色：古同“绯”，粉红色。杨妃色 湘妃色 粉红皆同义。 -->
+    <color name="fei_color">#ED5736</color>
+    <!-- 品红 -->
+    <!-- 品红：比大红浅的红色。-->
+    <color name="magenta">#F00056</color>
+    <!-- 桃红 -->
+    <!-- 桃红，桃花的颜色，比粉红略鲜润的颜色。 -->
+    <color name="taohong_color">#F47983</color>
+
+</resources>

@@ -1,6 +1,7 @@
 package ruins.ruinsandroidlibrary;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,12 +12,17 @@ import ruins.ui.base.AbstractBaseActivity;
 public class MainActivity extends AbstractBaseActivity {
     @BindView(R.id.tv_navigationview)
     TextView tvNavigationView;
+    @BindView(R.id.tv_openGallery)
+    TextView tvOpenGallery;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-      tvNavigationView.setOnClickListener(v -> {
-        startActivity(new Intent(this,NavigationViewActivity.class));
-      });
+      tvNavigationView.setOnClickListener(v -> startActivity(new Intent(this,NavigationViewActivity.class)));
+        tvOpenGallery.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+                    "content://media/internal/images/media"));
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -27,5 +33,10 @@ public class MainActivity extends AbstractBaseActivity {
     @Override
     protected ViewGroup getLoadingPartentView() {
         return null;
+    }
+
+    @Override
+    protected boolean useEventBus() {
+        return false;
     }
 }

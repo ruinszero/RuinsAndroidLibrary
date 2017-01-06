@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * HttpClient
  */
+@SuppressWarnings("unused")
 public class HttpClient {
     private static HttpClient httpClient;
     private Retrofit retrofit;
