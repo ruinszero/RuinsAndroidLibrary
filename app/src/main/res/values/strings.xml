@@ -3,6 +3,7 @@
     <string name="NavigationView">NavigationView 的使用</string>
     <string name="title_activity_navigation_view">NavigationViewActivity</string>
     <string name="open_Gallery">打开相册</string>
+    <string name="transition">过渡动画</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
