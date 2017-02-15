@@ -1,5 +1,7 @@
 package ruins.http;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -39,8 +41,9 @@ public class HttpClient {
             //设置Log
             builder.addInterceptor(interceptor);
         }
-
+        builder.connectTimeout(10, TimeUnit.SECONDS);   //设置超时时间
         OkHttpClient client = builder.build();
+
         retrofit=new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
