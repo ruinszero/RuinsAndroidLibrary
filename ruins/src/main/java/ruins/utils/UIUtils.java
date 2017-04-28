@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Build;
 
 /**
- * Created by ruinszero on 16/5/27.
+ * @author Ruins
  */
 public class UIUtils{
 
