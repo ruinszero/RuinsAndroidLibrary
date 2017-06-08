@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="500dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+  <ImageView
+      android:id="@+id/custom_image"
+      android:layout_width="53dp"
+      android:layout_height="53dp"
+      android:layout_marginTop="5dp"
+      android:contentDescription="@string/app_name"
+      android:scaleType="fitCenter"
+      android:visibility="gone"
+      />
+
+  <FrameLayout
+      android:id="@+id/error_frame"
+      android:layout_width="53dp"
+      android:layout_height="53dp"
+      android:layout_marginTop="5dp"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="center"
+        android:src="@drawable/ic_error"
+        />
+
+  </FrameLayout>
+
+  <FrameLayout
+      android:id="@+id/empty_frame"
+      android:layout_width="53dp"
+      android:layout_height="53dp"
+      android:layout_marginTop="5dp"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="center"
+        android:src="@drawable/ic_none"
+        />
+
+  </FrameLayout>
+
+  <FrameLayout
+      android:id="@+id/success_frame"
+      android:layout_width="53dp"
+      android:layout_height="53dp"
+      android:layout_marginTop="5dp"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:id="@+id/success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="center"
+        android:src="@drawable/ic_success"
+        />
+
+  </FrameLayout>
+
+  <FrameLayout
+      android:id="@+id/warning_frame"
+      android:layout_width="53dp"
+      android:layout_height="53dp"
+      android:layout_marginTop="5dp"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:id="@+id/warning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="center"
+        android:src="@drawable/ic_warning"
+        />
+
+  </FrameLayout>
+
+  <FrameLayout
+      android:id="@+id/progress_frame"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="9dp"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+
+    <ProgressBar
+        android:id="@+id/progressWheel"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        />
+  </FrameLayout>
+
+  <TextView
+      android:id="@+id/tv_normalTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:textColor="#575757"
+      android:textSize="19sp"
+      />
+
+  <TextView
+      android:id="@+id/content_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:gravity="center"
+      android:textAlignment="center"
+      android:textColor="#797979"
+      android:textSize="14sp"
+      android:visibility="gone"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:gravity="center"
+      >
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/gray_button_background"
+        android:text="@string/cancel"
+        android:visibility="gone"
+        style="@style/dialog_blue_button"
+        />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:text="@string/confirm"
+        style="@style/dialog_blue_button"
+        />
+
+  </LinearLayout>
+</LinearLayout>

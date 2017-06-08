@@ -40,7 +40,7 @@ android {
         compile 'com.squareup.okhttp3:okhttp:3.8.0'
         compile 'com.squareup.retrofit2:retrofit:2.3.0'
         compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-        compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+        compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
         //json解析
         compile 'com.google.code.gson:gson:2.8.0'
         compile 'com.squareup.retrofit2:converter-gson:2.0.1'
