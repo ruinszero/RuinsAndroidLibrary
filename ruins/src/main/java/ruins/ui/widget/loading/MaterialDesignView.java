@@ -7,10 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -52,15 +48,6 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 
 	private Drawable mCustomImgDrawable;
 
-	private AnimationSet mErrorXInAnim;
-	private AnimationSet mSuccessLayoutAnimSet;
-	private AnimationSet mModalInAnim;
-	private AnimationSet mModalOutAnim;
-
-	private Animation mOverlayOutAnim;
-	private Animation mErrorInAnim;
-	private Animation mSuccessBowAnim;
-
 	private FrameLayout mErrorFrame;
 	private FrameLayout mSuccessFrame;
 	private FrameLayout mProgressFrame;
@@ -97,45 +84,6 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		mProgressWheel = new ProgressBar(context);
 
 		mAlertType = alertType;
-		mErrorInAnim = OptAnimationLoader.loadAnimation(getContext(), R.anim.error_frame_in);
-		mErrorXInAnim = (AnimationSet)OptAnimationLoader.loadAnimation(getContext(), R.anim.error_x_in);
-		mSuccessBowAnim = OptAnimationLoader.loadAnimation(getContext(), R.anim.success_bow_roate);
-		mSuccessLayoutAnimSet = (AnimationSet)OptAnimationLoader.loadAnimation(getContext(), R.anim.success_mask_layout);
-		mModalInAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.modal_in);
-		mModalOutAnim = (AnimationSet) OptAnimationLoader.loadAnimation(getContext(), R.anim.modal_out);
-		mModalOutAnim.setAnimationListener(new Animation.AnimationListener() {
-			@Override
-			public void onAnimationStart(Animation animation) {
-
-			}
-
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				mDialogView.setVisibility(View.GONE);
-				mDialogView.post(() -> {
-					if (mCloseFromCancel) {
-						MaterialDesignView.super.cancel();
-					} else {
-						MaterialDesignView.super.dismiss();
-					}
-				});
-			}
-
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-
-			}
-		});
-		// dialog overlay fade out
-		mOverlayOutAnim = new Animation() {
-			@Override
-			protected void applyTransformation(float interpolatedTime, Transformation t) {
-				WindowManager.LayoutParams wlp = getWindow().getAttributes();
-				wlp.alpha = 1 - interpolatedTime;
-				getWindow().setAttributes(wlp);
-			}
-		};
-		mOverlayOutAnim.setDuration(120);
 	}
 
 	public MaterialDesignView(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
@@ -285,9 +233,6 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 					mBtnConfirm.setVisibility(View.GONE);
 					break;
 			}
-			if (!fromCreate) {
-				//playAnimation();
-			}
 		}
 	}
 
@@ -316,20 +261,9 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public void playAnimation () {
-		if (mAlertType == ERROR_TYPE) {
-			mErrorFrame.startAnimation(mErrorInAnim);
-			mError.startAnimation(mErrorXInAnim);
-		} else if (mAlertType == SUCCESS_TYPE) {
-			//mSuccess.startTickAnim();
-			mSuccessRightMask.startAnimation(mSuccessBowAnim);
-		}
-	}
-
 	public int getAlerType () {
 		return mAlertType;
 	}
-
 	public void changeAlertType(int alertType) {
 		changeAlertType(alertType, false);
 	}
@@ -354,10 +288,12 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	public void dismissWithAnimation() {
 		dismissWithAnimation(false);
 	}
+
+	@Override
 	protected void onStart() {
-		mDialogView.startAnimation(mModalInAnim);
-		//playAnimation();
+		super.onStart();
 	}
+
 	@Override
 	public void cancel() {
 		dismissWithAnimation(true);
@@ -365,7 +301,10 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 
 	public void dismissWithAnimation(boolean fromCancel) {
 		mCloseFromCancel = fromCancel;
-		mBtnConfirm.startAnimation(mOverlayOutAnim);
-		mDialogView.startAnimation(mModalOutAnim);
+		if (mCloseFromCancel) {
+			MaterialDesignView.super.cancel();
+		} else {
+			MaterialDesignView.super.dismiss();
+		}
 	}
 }
