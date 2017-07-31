@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ruins.ui.widget.loading.MaterialDesignView;
+import ruins.ui.widget.loading.MaterialDesignDialog;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_navigationview)
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, TransitionActivity.class),
                 ActivityOptions.makeSceneTransitionAnimation(this).toBundle()));
         tvDialog.setOnClickListener(v -> {
-           new MaterialDesignView(MainActivity.this, MaterialDesignView.PROGRESS_TYPE)
+           new MaterialDesignDialog(MainActivity.this, MaterialDesignDialog.SUCCESS_TYPE)
                .setTitleText("这是一个测试")
                .setContentText("确实是一个测试")
                .setConfirmText("ok")

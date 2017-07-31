@@ -19,7 +19,7 @@ import zero.ruins.R;
  * MaterialDesign风格的布局
  */
 
-public class MaterialDesignView extends AlertDialog implements View.OnClickListener {
+public class MaterialDesignDialog extends AlertDialog implements View.OnClickListener {
 
 	public static final int NORMAL_TYPE = 0;
 	public static final int ERROR_TYPE = 1;
@@ -27,6 +27,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	public static final int WARNING_TYPE = 3;
 	public static final int CUSTOM_IMAGE_TYPE = 4;
 	public static final int PROGRESS_TYPE = 5;
+	public static final int EMPTY_TYPE = 6;
 
 	private String mTitleText;
 	private String mContentText;
@@ -43,10 +44,9 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	private OnMaterialClickListener mConfirmClickListener;
 
 	private View mDialogView;
-	private View mSuccessLeftMask;
-	private View mSuccessRightMask;
 
 	private Drawable mCustomImgDrawable;
+	private Drawable mProgressDrawable;
 
 	private FrameLayout mErrorFrame;
 	private FrameLayout mSuccessFrame;
@@ -60,7 +60,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	private ImageView mWarning;
 	private ImageView mSuccess;
 
-	private ProgressBar mProgressWheel;
+	private ProgressBar mProgress;
 
 	private TextView mTitleTextView;
 	private TextView mContentTextView;
@@ -70,49 +70,49 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 
 
 	public static interface OnMaterialClickListener {
-		public void onClick(MaterialDesignView materialDesignView);
+		public void onClick(MaterialDesignDialog materialDesignDialog);
 	}
 
-	public MaterialDesignView(@NonNull Context context) {
+	public MaterialDesignDialog(@NonNull Context context) {
 		super(context);
 	}
 
-	public MaterialDesignView(@NonNull Context context, int alertType) {
+	public MaterialDesignDialog(@NonNull Context context, int alertType) {
 		super(context, R.style.alert_dialog);
 		setCancelable(true);
 		setCanceledOnTouchOutside(false);
-		mProgressWheel = new ProgressBar(context);
+		mProgress = new ProgressBar(context);
 
 		mAlertType = alertType;
 	}
 
-	public MaterialDesignView(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+	public MaterialDesignDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_normalview);
+		setContentView(R.layout.layout_material_design_dialog);
 
 		mDialogView = getWindow().getDecorView().findViewById(android.R.id.content);
 
-		mErrorFrame = (FrameLayout) findViewById(R.id.error_frame);
-		mEmptyFrame = (FrameLayout) findViewById(R.id.empty_frame);
-		mSuccessFrame = (FrameLayout) findViewById(R.id.success_frame);
-		mWarningFrame = (FrameLayout) findViewById(R.id.warning_frame);
-		mProgressFrame = (FrameLayout) findViewById(R.id.progress_frame);
+		mErrorFrame = (FrameLayout) findViewById(R.id.frame_error);
+		mEmptyFrame = (FrameLayout) findViewById(R.id.frame_empty);
+		mSuccessFrame = (FrameLayout) findViewById(R.id.frame_success);
+		mWarningFrame = (FrameLayout) findViewById(R.id.frame_warning);
+		mProgressFrame = (FrameLayout) findViewById(R.id.frame_progress);
 
-		mCustomImage = (ImageView) findViewById(R.id.custom_image);
-		mError = (ImageView) mErrorFrame.findViewById(R.id.error);
-		mEmpty = (ImageView) mEmptyFrame.findViewById(R.id.empty);
-		mWarning = (ImageView) mWarningFrame.findViewById(R.id.warning);
-		mSuccess = (ImageView) mSuccessFrame.findViewById(R.id.success);
+		mCustomImage = (ImageView) findViewById(R.id.img_custom);
+		mError = (ImageView) mErrorFrame.findViewById(R.id.img_error);
+		mEmpty = (ImageView) mEmptyFrame.findViewById(R.id.img_empty);
+		mWarning = (ImageView) mWarningFrame.findViewById(R.id.img_warning);
+		mSuccess = (ImageView) mSuccessFrame.findViewById(R.id.img_success);
 
-		mProgressWheel = (ProgressBar) mProgressFrame.findViewById(R.id.progressWheel);
+		mProgress = (ProgressBar) mProgressFrame.findViewById(R.id.progressBar);
 
 		mTitleTextView = (TextView) findViewById(R.id.tv_normalTitle);
-		mContentTextView = (TextView) findViewById(R.id.content_text);
+		mContentTextView = (TextView) findViewById(R.id.tv_content);
 
 		mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
 		mBtnCancel = (Button) findViewById(R.id.btn_cancel);
@@ -126,7 +126,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		changeAlertType(mAlertType, true);
 	}
 
-	public MaterialDesignView setTitleText (String text) {
+	public MaterialDesignDialog setTitleText (String text) {
 		mTitleText = text;
 		if (mTitleTextView != null && mTitleText != null) {
 			mTitleTextView.setText(mTitleText);
@@ -134,7 +134,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public MaterialDesignView setContentText (String text) {
+	public MaterialDesignDialog setContentText (String text) {
 		mContentText = text;
 		if (mContentTextView != null && mContentText != null) {
 			showContentText(true);
@@ -143,7 +143,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public MaterialDesignView showContentText(boolean isShow) {
+	public MaterialDesignDialog showContentText(boolean isShow) {
 		mShowContent = isShow;
 		if (mContentTextView != null) {
 			mContentTextView.setVisibility(mShowContent ? View.VISIBLE : View.GONE);
@@ -151,7 +151,15 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public MaterialDesignView setCancelText (String text) {
+	public MaterialDesignDialog setProgressDrawable(Drawable drawable) {
+		mProgressDrawable = drawable;
+		if (mProgress != null && mProgressDrawable != null) {
+			mProgress.setIndeterminateDrawable(mProgressDrawable);
+		}
+		return this;
+	}
+
+	public MaterialDesignDialog setCancelText (String text) {
 		mCancelText = text;
 		if (mBtnCancel != null && mCancelText != null) {
 			showCancelButton(true);
@@ -160,7 +168,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public MaterialDesignView showCancelButton(boolean isShow) {
+	public MaterialDesignDialog showCancelButton(boolean isShow) {
 		mShowCancel = isShow;
 		if (mBtnCancel != null) {
 			mBtnCancel.setVisibility(mShowCancel ? View.VISIBLE : View.GONE);
@@ -168,7 +176,7 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public MaterialDesignView setConfirmText (String text) {
+	public MaterialDesignDialog setConfirmText (String text) {
 		mConfirmText = text;
 		if (mBtnConfirm != null && mConfirmText != null) {
 			mBtnConfirm.setText(mConfirmText);
@@ -176,12 +184,12 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		return this;
 	}
 
-	public MaterialDesignView setCancelClickListener (OnMaterialClickListener listener) {
+	public MaterialDesignDialog setCancelClickListener (OnMaterialClickListener listener) {
 		mCancelClickListener = listener;
 		return this;
 	}
 
-	public MaterialDesignView setConfirmClickListener (OnMaterialClickListener listener) {
+	public MaterialDesignDialog setConfirmClickListener (OnMaterialClickListener listener) {
 		mConfirmClickListener = listener;
 		return this;
 	}
@@ -190,13 +198,13 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	public void onClick(View v) {
 		if (v.getId() == R.id.btn_cancel) {
 			if (mCancelClickListener != null) {
-				mCancelClickListener.onClick(MaterialDesignView.this);
+				mCancelClickListener.onClick(MaterialDesignDialog.this);
 			} else {
 				dismissWithAnimation();
 			}
 		} else if (v.getId() == R.id.btn_confirm) {
 			if (mConfirmClickListener != null) {
-				mConfirmClickListener.onClick(MaterialDesignView.this);
+				mConfirmClickListener.onClick(MaterialDesignDialog.this);
 			} else {
 				dismissWithAnimation();
 			}
@@ -217,9 +225,6 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 					break;
 				case SUCCESS_TYPE:
 					mSuccessFrame.setVisibility(View.VISIBLE);
-					// initial rotate layout of success mask
-					//mSuccessLeftMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(0));
-					//mSuccessRightMask.startAnimation(mSuccessLayoutAnimSet.getAnimations().get(1));
 					break;
 				case WARNING_TYPE:
 					mBtnConfirm.setBackgroundResource(R.drawable.red_button_background);
@@ -231,6 +236,11 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 				case PROGRESS_TYPE:
 					mProgressFrame.setVisibility(View.VISIBLE);
 					mBtnConfirm.setVisibility(View.GONE);
+					break;
+				case EMPTY_TYPE:
+					mEmptyFrame.setVisibility(View.VISIBLE);
+					break;
+				default:
 					break;
 			}
 		}
@@ -245,14 +255,9 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 		mBtnConfirm.setVisibility(View.VISIBLE);
 
 		mBtnConfirm.setBackgroundResource(R.drawable.blue_button_background);
-		mErrorFrame.clearAnimation();
-		mError.clearAnimation();
-		mSuccess.clearAnimation();
-		mSuccessLeftMask.clearAnimation();
-		mSuccessRightMask.clearAnimation();
 	}
 
-	public MaterialDesignView setCustomImage(Drawable drawable) {
+	public MaterialDesignDialog setCustomImage(Drawable drawable) {
 		mCustomImgDrawable = drawable;
 		if (mCustomImage != null && mCustomImgDrawable != null) {
 			mCustomImage.setVisibility(View.VISIBLE);
@@ -282,8 +287,11 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	public String getConfirmText () {
 		return mConfirmText;
 	}
-	public ProgressBar getProgressHelper () {
-		return mProgressWheel;
+	public ProgressBar getProgress () {
+		return mProgress;
+	}
+	public Drawable getProgressDrawable(){
+		return mProgressDrawable;
 	}
 	public void dismissWithAnimation() {
 		dismissWithAnimation(false);
@@ -302,9 +310,9 @@ public class MaterialDesignView extends AlertDialog implements View.OnClickListe
 	public void dismissWithAnimation(boolean fromCancel) {
 		mCloseFromCancel = fromCancel;
 		if (mCloseFromCancel) {
-			MaterialDesignView.super.cancel();
+			MaterialDesignDialog.super.cancel();
 		} else {
-			MaterialDesignView.super.dismiss();
+			MaterialDesignDialog.super.dismiss();
 		}
 	}
 }
